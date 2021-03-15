@@ -1,0 +1,10 @@
+name: kafka
+dependencies:
+- python=3.8
+- pip
+- black
+- ipykernel
+
+- pip:
+  - confluent_kafka
+  - fastavro
