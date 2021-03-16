@@ -1,0 +1,9 @@
+{
+    "name": "load-kafka-config",
+    "config":
+    {
+        "connector.class": "FileStreamSource",
+        "file": "./confluent-6.1.0/etc/kafka/server.properties",
+        "topic": "kafka-config-topic"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "name": "dump-kafka-config",
+    "config":
+    {
+        "connector.class": "FileStreamSink",
+        "file": "./copy-of-server-properties",
+        "topics": "kafka-config-topic"
+    }
+}

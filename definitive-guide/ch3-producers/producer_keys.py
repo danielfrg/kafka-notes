@@ -1,11 +1,11 @@
 # %%
 # This examples requires a local kafka broker and a topic created like:
-# kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 5 --topic test_p5
+# kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 5 --topic test.p5
 
 # Reset topic with:
-# kafka-topics --delete --bootstrap-server localhost:9092  --topic test_p5
+# kafka-topics --delete --bootstrap-server localhost:9092  --topic test.p5
 
-topic = "test_p5"
+topic = "test.p5"
 
 # %%
 
@@ -23,10 +23,24 @@ a = AdminClient(conf)
 topics = a.list_topics()
 topics.topics
 
-# %% Create a producers
+# %%
+
+# Optional per-message delivery callback (triggered by poll() or flush())
+# when a message has been successfully delivered or permanently
+# failed delivery (after retries).
+def delivery_callback(err, msg):
+    if err:
+        print("%% Message failed delivery: %s\n" % err)
+    else:
+        print(
+            "%% Message delivered to %s [%d] @ %d\n"
+            % (msg.topic(), msg.partition(), msg.offset())
+        )
+
 
 p = Producer(conf)
 
+# %% Create a producers
 
 msgs = [
     "1",  # Partition 3
@@ -39,24 +53,6 @@ msgs = [
     "2000000000",  # Partition 1
     "1000000000",  # Partition 3
 ]
-
-# Optional per-message delivery callback (triggered by poll() or flush())
-# when a message has been successfully delivered or permanently
-# failed delivery (after retries).
-m = None
-
-
-def delivery_callback(err, msg):
-    global m
-    m = msg
-    if err:
-        print("%% Message failed delivery: %s\n" % err)
-    else:
-        print(
-            "%% Message delivered to %s [%d] @ %d\n"
-            % (msg.topic(), msg.partition(), msg.offset())
-        )
-
 
 for line in msgs:
     try:
@@ -76,7 +72,7 @@ for line in msgs:
 # %% Consume using CLI
 
 # Use this to read messages from a particular partition:
-# kafka-console-consumer --bootstrap-server localhost:9092 --topic test_p5 --from-beginning --partition 3
+# kafka-console-consumer --bootstrap-server localhost:9092 --topic test.p5 --from-beginning --partition 3
 
 # If the command is still running we will see new messages appear on the output of that process as we send more messages
 
