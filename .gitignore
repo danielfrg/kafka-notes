@@ -139,5 +139,7 @@ cython_debug/
 
 # Project specific
 confluent-*
+confluent
 kafka-*
+kafka
 copy-of-server-properties
