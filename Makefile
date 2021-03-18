@@ -6,10 +6,6 @@ MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
 PWD := $(shell pwd)
-TEST_FILTER ?= ""
-TEST_MARKERS ?= "not minio and not gcs"
-
-S3DIR := ${PWD}/tmp-data
 
 
 first: help
@@ -25,8 +21,24 @@ help:  ## Show this help menu
 
 # ------------------------------------------------------------------------------
 
+env:  ## Create Python env
+	mamba env create
+
+
 kafka:  ## Download kafka
-	curl -O https://www.apache.org/dyn/closer.cgi?path=/kafka/2.7.0/kafka_2.13-2.7.0.tgz
+	curl -O https://downloads.apache.org/kafka/2.7.0/kafka_2.13-2.7.0.tgz
 	tar -zxvf kafka_2.13-2.7.0.tgz
 	rm kafka_2.13-2.7.0.tgz
 	mv kafka_* kafka
+
+
+run-zookeeper: ##
+	zookeeper-server-start  ./kafka/config/zookeeper.properties
+
+
+run-kafka:  ##
+	kafka-server-start ./kafka/config/server.properties
+
+
+clean:  ##
+	rm -rf /tmp/kafka-logs
