@@ -1,5 +1,30 @@
 # Kafka notes
 
+## Getting started
+
+Setup for the repo
+
+```
+# Install zookeeper
+brew install zookeeper
+brew install kafka
+
+# Download kafka
+make kafka
+
+# Create Python env
+make env
+```
+
+```
+# Start Zookeeper
+make run-zookeeper
+
+# Run Kafka
+make run-kafka
+```
+
+Now you can run the examples
 
 ## Links
 
