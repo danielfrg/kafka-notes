@@ -138,10 +138,10 @@ dmypy.json
 cython_debug/
 
 # Project specific
+.idea
 confluent-*
 confluent
 kafka
-flink
-.idea
+/flink
 tmp
 copy-of-server-properties
